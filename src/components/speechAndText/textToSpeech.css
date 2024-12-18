@@ -1,0 +1,56 @@
+/* TextToSpeechComponent.css */
+
+.interviewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0px 10px 0px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+.interviewer__title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.interviewer__image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.interviewer__question-number {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.interviewer__controls {
+  display: flex;
+  gap: 10px;
+}
+
+.interviewer__button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.interviewer__button:hover {
+  background-color: #0056b3;
+}
+
+.interviewer__button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

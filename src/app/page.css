@@ -1,0 +1,67 @@
+/* page.css */
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #e3d8d8;
+  min-height: 200vh;
+}
+
+.home-page__title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+.home-page__speechcomponent{
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* 'gap' is more universally supported than 'row-gap' */
+  align-items: center; /* Align items vertically in the center */
+  justify-content: space-between; /* Distribute space evenly between items */
+  padding: 10px;
+  background-color: #f0f4f8; /* Light background for contrast */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  max-width: 1000px;
+  margin: 10px auto; /* Center the component on the page */
+}
+@media screen and (max-width: 600px) {
+  .home-page__speechcomponent{
+    flex-direction: column;
+    justify-content:center
+  }
+}
+.home-page__loading {
+  font-size: 1.5rem;
+  color: #666;
+}
+
+.text-to-speech,
+.speech-to-text {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-to-speech__button,
+.speech-to-text__button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.text-to-speech__button:hover,
+.speech-to-text__button:hover {
+  background-color: #0056b3;
+}
