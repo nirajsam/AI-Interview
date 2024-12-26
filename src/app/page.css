@@ -5,8 +5,14 @@
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background-color: #e3d8d8;
+  background-color: #d8e1e3;
   min-height: 200vh;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), /* Semi-transparent white overlay */
+              url('https://blog.talview.com/hs-fs/hubfs/AI_V.png?width=1684&name=AI_V.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
 }
 
 .home-page__title {
@@ -64,4 +70,60 @@
 .text-to-speech__button:hover,
 .speech-to-text__button:hover {
   background-color: #0056b3;
+}
+
+/* StartPage.css */
+
+.main-start-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #77a6ee; /* Light background color */
+  padding: 20px;
+  box-sizing: border-box;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), /* Semi-transparent white overlay */
+              url('https://blog.talview.com/hs-fs/hubfs/AI_V.png?width=1684&name=AI_V.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+}
+@media screen and (max-width: 600px) {
+  .main-start-page {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), /* Semi-transparent white overlay */
+                url('https://wallpapers.com/images/hd/artificial-intelligence-720-x-1280-wallpaper-d2jkxfa4d7ah25zm.jpg'); /* Mobile-specific image path */
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed; 
+  }
+}
+.main-start-page__title{
+  font-size: 2rem;
+  color: #2503ea;
+  font-weight:bolder;
+  margin-bottom: 10px;
+}
+
+.main-start-page__button {
+  width: 80%;
+  max-width: 400px;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.main-start-page__button:disabled {
+  background-color: #d3d3d3; /* Light grey color for disabled state */
+  cursor: not-allowed;
 }

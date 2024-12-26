@@ -2,32 +2,24 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import './page.css'; // Ensure this file is created and styled as per BEM
-import StartButton from '@/components/startPage/StartButton';
+// import StartButton from '@/components/startPage/StartButton';
 import SpeechToTextComponent from '@/components/speechAndText/speechToText';
 import TextToSpeechComponent from '@/components/speechAndText/textToSpeech';
 import { getAiQuestions } from '@/utils/getAiQuestions';
 import useQAStore from '@/statemaagement/quesAnsDataSore';
-
-interface Question {
-  question: string;
-}
-
-interface QuestData {
-  data: Array<{
-    questions: Question[];
-  }>;
-}
+import StartPage from '@/components/intervieweeDetails/intervieweeDetails';
 
 // Define the Home component
 const Home: React.FC = () => {
-  const { qaList, addQA, currentQuestionIndex, setCurrentQuestionIndex } = useQAStore();
+  const { qaList, addQA, currentQuestionIndex, setCurrentQuestionIndex, intervieweeDetails } = useQAStore();
   const [quesData, setQuesData] = useState<any>([]);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [start, setStart] = useState<boolean>(false);
 
   const fetchQuestionsFromAI = async () => {
     try {
       setLoading(true);
-      const quesdat: any = await getAiQuestions();
+      const quesdat: any = await getAiQuestions(intervieweeDetails);
       console.log(quesdat);
       setQuesData(quesdat);
       setLoading(false);
@@ -38,9 +30,21 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchQuestionsFromAI();
-  }, []);
-
+    if(!(intervieweeDetails.name==='' && intervieweeDetails.technology==='' && intervieweeDetails.experience==='')){
+      fetchQuestionsFromAI();
+    }
+    
+  }, [intervieweeDetails]);
+  console.log(intervieweeDetails)
+  if (!start) {
+    return (
+      <div className="main-start-page">
+        <h1 className='main-start-page__title'>Interview Buddy</h1>
+        <StartPage/>
+        <button className='main-start-page__button' disabled={intervieweeDetails.name==='' && intervieweeDetails.technology==='' && intervieweeDetails.experience===''} onClick={()=>{setStart(true)}}>Start your Interview</button>
+      </div>
+    );
+  }
   if (loading) {
     return (
       <div className="home-page">
@@ -51,16 +55,16 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-page">
-      <h1 className="home-page__title">Prepare Your Interview</h1>
       {/* Uncomment the StartButton component if needed */}
       {/* <StartButton /> */}
       <div className='home-page__speechcomponent'>
+        {currentQuestionIndex !== 404?
         <TextToSpeechComponent
           quest={quesData}
           currentQuestionAnswerList={qaList}
           addTOCurrentQA={addQA}
           setCurQuesIndex={setCurrentQuestionIndex}
-        />
+        />:''}
         <SpeechToTextComponent
           quest={quesData}
           currentQuestionAnswerList={qaList}

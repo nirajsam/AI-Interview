@@ -1,12 +1,17 @@
 import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
 
-// Replace with your actual API key
-const apiKey: string = "AIzaSyAVMzf2RvoQ27aTIGjAeZ-Tp-NC7O-N7iY";
+let apiKey: string;
+const generateData = async (prompt: string, token: string): Promise<string | undefined> => {
+  console.log("token",token)
+  // Replace with your actual API key
+  if(token=== 'NIRAJ'){
+    apiKey = "AIzaSyAVMzf2RvoQ27aTIGjAeZ-Tp-NC7O-N7iY";
+  }else{
+    apiKey= token;
+  }
 
-const genAI = new GoogleGenerativeAI(apiKey);
-const model: GenerativeModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-const generateData = async (prompt: string): Promise<string | undefined> => {
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model: GenerativeModel = await genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   let attempts = 0;
   const maxRetries = 5;
   const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));

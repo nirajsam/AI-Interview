@@ -6,6 +6,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { getFeedBackFromAI } from '@/utils/getFeedBackFromAI';
 import Feedback from '../feedback/feedback';
 import './speechToText.css';
+import useQAStore from '@/statemaagement/quesAnsDataSore';
 
 // Define the structure of the props using TypeScript interfaces
 interface Question {
@@ -35,10 +36,11 @@ const SpeechToTextComponent: React.FC<SpeechToTextProps> = ({ quest, currentQues
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
-
+  const {setCurrentQuestionIndex,intervieweeDetails } = useQAStore();
   const [isClient, setIsClient] = useState(false);
   const [text, setText] = useState(transcript || '');
   const [feedbackData, setFeedbackData] = useState<String>('');
+  const [feedbackDataLoading, setFeedbackDataLoading] = useState<String>('');
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
@@ -63,7 +65,7 @@ const SpeechToTextComponent: React.FC<SpeechToTextProps> = ({ quest, currentQues
     return <span>Loading...</span>;
   }
   if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
+    return <span>Browser does not support speech recognition.</span>;
   }
 
   const handleAddAnswerTOCurrentQA = (data: string) => {
@@ -85,10 +87,13 @@ const SpeechToTextComponent: React.FC<SpeechToTextProps> = ({ quest, currentQues
     handleTextReset();
   };
   const getYourFeedBack = async() => {
-    const feedBack = await getFeedBackFromAI(JSON.stringify(currentQuestionAnswerList))
+    setFeedbackDataLoading('loading feedback...')
+    const feedBack = await getFeedBackFromAI(JSON.stringify(currentQuestionAnswerList), intervieweeDetails.token)
     setFeedbackData(feedBack)
+    setCurrentQuestionIndex(404)
+    setFeedbackDataLoading('feedback loaded')
   }
-  if(feedbackData){
+  if(feedbackData && feedbackDataLoading =='feedback loaded'){
     console.log(feedbackData)
     return <Feedback feedBackData={feedbackData}/>
   }
@@ -113,8 +118,9 @@ const SpeechToTextComponent: React.FC<SpeechToTextProps> = ({ quest, currentQues
       />
       <div className='speech-to-text__group-button'>
       <button className="speech-to-text__button" onClick={() => handleAddAnswerTOCurrentQA(text)}>Add Response</button>
-      <button className="speech-to-text__button" onClick={() => getYourFeedBack()} >Get Feedback</button>
+      <button className="speech-to-text__button" onClick={() => getYourFeedBack()} disabled={currQuesIndex<quest?.data[0]?.questions.length-2}>Get Feedback</button>
       </div>
+      <div>{feedbackDataLoading==='loading feedback...'?feedbackDataLoading:''}</div>
     </div>
   );
 };

@@ -22,11 +22,10 @@ const mockResponse = `[
         "answer": "useState:\n\nManages local component state.\nExample: A counter app.\njsx\nCopy code\nconst [count, setCount] = useState(0);\nuseEffect:\n\nHandles side effects, like API calls or DOM manipulations.\nExample: Fetching data on component mount.\njsx\nCopy code\nuseEffect(() => {\n  fetchData();\n}, []);\nuseContext:\n\nSimplifies state sharing without prop drilling.\nExample: Sharing authentication state across the app.\njsx\nCopy code\nconst auth = useContext(AuthContext);\nuseCallback and useMemo:\n\nOptimize performance by memoizing functions and values.\nExample: Memoizing an event handler passed as a prop.\njsx\nCopy code\nconst handleClick = useCallback(() => doSomething(), []);\nuseRef:\n\nAccesses DOM elements and persists values across renders without causing re-renders.\nExample: Input focus or storing previous state.\njsx\nCopy code\nconst inputRef = useRef();\ninputRef.current.focus();\nCustom Hooks:\n\nI’ve created custom hooks to abstract logic, like handling API calls:\njsx\nCopy code\nconst useFetch = (url) => {\n  const [data, setData] = useState(null);\n  useEffect(() => {\n    fetch(url).then((res) => res.json()).then(setData);\n  }, [url]);\n  return data;\n};\n"
     }
 ]`
-const getFeedBackFromAI = async (interviewResponseJSON: string = ""): Promise<String> => {
-    console.log("ruhiiii",interviewResponseJSON)
+const getFeedBackFromAI = async (interviewResponseJSON: string = "", token: string): Promise<String> => {
 // suppose you are interviewer , interviewing candidate with skill {React} having experience of {5 years}, so now provide questions related to to these skill in just json format nothing else and also consider you need to complete this interview withing an hour
-  const AiInput = `check this interview response and give me feedback in proper format ${mockResponse}, also tell me how much marks this candidate will get in this interview out of 10, keep it short and meaningful`;
-  const AIOutput = await generateData(AiInput);
+  const AiInput = `check this interview response and give me feedback in proper format ${interviewResponseJSON}, also tell me how much marks this candidate will get in this interview out of 10, keep it short and meaningful`;
+  const AIOutput = await generateData(AiInput, token);
   if (AIOutput === undefined) {
     console.error("Failed to generate data");
     return 'failed to get feedback from AI';
