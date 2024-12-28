@@ -11,6 +11,10 @@ const StartPage: React.FC = () => {
   const [token, setToken] = useState('');
 
   const handleSubmit = () => {
+    if(!name || !technology || !experience || !time || !token){
+      alert('Please enter all the details');
+      return
+    }
     setIntervieweeDetails({name, technology, experience, time, token});
     alert('Details submitted successfully!');
   };

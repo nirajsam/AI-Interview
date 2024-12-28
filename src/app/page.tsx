@@ -8,6 +8,7 @@ import TextToSpeechComponent from '@/components/speechAndText/textToSpeech';
 import { getAiQuestions } from '@/utils/getAiQuestions';
 import useQAStore from '@/statemaagement/quesAnsDataSore';
 import StartPage from '@/components/intervieweeDetails/intervieweeDetails';
+import ErrorBoundary from '@/components/errorBoundry/errorBoundry';
 
 // Define the Home component
 const Home: React.FC = () => {
@@ -20,9 +21,14 @@ const Home: React.FC = () => {
     try {
       setLoading(true);
       const quesdat: any = await getAiQuestions(intervieweeDetails);
-      console.log(quesdat);
-      setQuesData(quesdat);
-      setLoading(false);
+      if(quesdat){
+        console.log(quesdat);
+        setQuesData(quesdat);
+        setLoading(false);
+      }else{
+        throw new Error('Failed to fetch questions');
+      }
+      
     } catch (error) {
       console.error("Failed to fetch questions:", error);
       setLoading(false);
@@ -54,6 +60,7 @@ const Home: React.FC = () => {
   }
 
   return (
+    <ErrorBoundary fallback={<h1>something went wrong</h1>}>
     <div className="home-page">
       {/* Uncomment the StartButton component if needed */}
       {/* <StartButton /> */}
@@ -73,6 +80,7 @@ const Home: React.FC = () => {
         />
       </div>
     </div>
+    </ErrorBoundary>
   );
 };
 
