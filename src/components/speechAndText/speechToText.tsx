@@ -7,6 +7,7 @@ import { getFeedBackFromAI } from '@/utils/getFeedBackFromAI';
 import Feedback from '../feedback/feedback';
 import './speechToText.css';
 import useQAStore from '@/statemaagement/quesAnsDataSore';
+import textConversion from '@/utils/textConversion';
 
 // Define the structure of the props using TypeScript interfaces
 interface Question {
@@ -38,9 +39,10 @@ const SpeechToTextComponent: React.FC<SpeechToTextProps> = ({ quest, currentQues
   } = useSpeechRecognition();
   const {setCurrentQuestionIndex,intervieweeDetails } = useQAStore();
   const [isClient, setIsClient] = useState(false);
-  const [text, setText] = useState(transcript || '');
+  const [text, setText] = useState('');
   const [feedbackData, setFeedbackData] = useState<String>('');
   const [feedbackDataLoading, setFeedbackDataLoading] = useState<String>('');
+  
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
@@ -53,7 +55,8 @@ const SpeechToTextComponent: React.FC<SpeechToTextProps> = ({ quest, currentQues
   
   useEffect(() => {
     if (transcript) {
-      setText(transcript);
+      const updatedText = textConversion(transcript);
+      setText(updatedText);
     }
   }, [transcript]);
 

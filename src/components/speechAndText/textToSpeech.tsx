@@ -19,7 +19,7 @@ const TextToSpeechComponent: React.FC<any>  = ({quest,currentQuestionAnswerList,
   },[quest])
   React.useEffect(() => {
     if ('speechSynthesis' in window) {
-      if(!welcomespokenText && quest.length>0){
+      if(!welcomespokenText && quest.data.length>0){
         const wecomeText = `Hello ${intervieweeDetails.name} welcome to the interview, your technology is ${intervieweeDetails.technology} and your experience is ${intervieweeDetails.experience} years , yu can start your interview by clicking on speak button, then move to next after answering`;
         const utterance = new SpeechSynthesisUtterance(wecomeText);
         window.speechSynthesis.speak(utterance);
