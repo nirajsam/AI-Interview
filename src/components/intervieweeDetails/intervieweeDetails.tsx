@@ -53,12 +53,11 @@ const StartPage: React.FC = () => {
         autoComplete="new-time"
       />
       <input
-        type="password"
-        className="start-page__input"
+        type="text"
+        className="start-page__input input-password"
         placeholder="provide gemini token"
         value={token}
         onChange={(e) => setToken(e.target.value)}
-        autoComplete="new-password"
       />
       <button className="start-page__submit-button" onClick={handleSubmit}>
         Submit your details
